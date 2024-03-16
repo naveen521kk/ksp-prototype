@@ -8,9 +8,13 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-center container space-y-4 my-5 lg:my-0">
       <div className="w-full space-y-2">
         <Label htmlFor="essay" className="font-semibold text-2xl text-center">
-          Enter essay below:
+          Essay Validator
         </Label>
-        <Textarea id="essay" className="min-h-[70vh] text-xl" />
+        <Textarea
+          id="essay"
+          className="min-h-[70vh] text-xl"
+          placeholder="start typing your essay here..."
+        />
       </div>
       <div className="w-full flex flex-row space-x-3">
         <Button className="w-full">Submit</Button>
