@@ -6,11 +6,11 @@ import Image from "next/image";
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center container space-y-4 my-5 lg:my-0">
-      <div className="w-full">
-        <Label htmlFor="essay" className="font-semibold text-lg text-center">
+      <div className="w-full space-y-2">
+        <Label htmlFor="essay" className="font-semibold text-2xl text-center">
           Enter essay below:
         </Label>
-        <Textarea id="essay" className="min-h-[70vh]" />
+        <Textarea id="essay" className="min-h-[70vh] text-xl" />
       </div>
       <div className="w-full flex flex-row space-x-3">
         <Button className="w-full">Submit</Button>
