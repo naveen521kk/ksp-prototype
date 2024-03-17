@@ -17,9 +17,9 @@ const ProgressBarCircle: React.FC<ProgressBarCircleProps> = ({ progress }) => {
         viewBox="0 0 100 100"
         fill="none"
         stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
       >
         <circle
           className="text-primary-foreground opacity-20"
