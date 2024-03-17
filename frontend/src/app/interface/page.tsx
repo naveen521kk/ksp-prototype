@@ -25,10 +25,11 @@ export default function Example() {
                   dated 10-11-2022 and is about a man named{" "}
                   <span className="highlight">NAGAN MUNNI</span>. The report
                   states that <span className="highlight">NAGAN MUNNI</span> is
-                  a "rowdy" and a "habitual offender" who "disturbs public peace
-                  in public places." The report also states that{" "}
-                  <span className="highlight">NAGAN MUNNI</span> is "under
-                  surveillance."
+                  a &quot;rowdy&quot; and a &quot;habitual offender&quot; who
+                  &quot;disturbs public peace in public places.&quot; The report
+                  also states that{" "}
+                  <span className="highlight">NAGAN MUNNI</span> is &quot;under
+                  surveillance.&quot;
                 </p>
 
                 <p>
