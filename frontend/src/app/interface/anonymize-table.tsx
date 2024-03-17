@@ -51,7 +51,9 @@ export function AnonymizeTable() {
                 <PopoverContent className="w-80">
                   <div className="grid gap-4">
                     <div className="space-y-2">
-                      <h4 className="font-medium leading-none">Edit Content</h4>
+                      <h4 className="font-medium leading-none">
+                        Update Replacement
+                      </h4>
                       <p className="text-sm text-muted-foreground">
                         Edit the content of the selected item
                       </p>
