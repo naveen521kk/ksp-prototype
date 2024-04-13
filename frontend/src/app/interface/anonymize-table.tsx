@@ -18,7 +18,11 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
-export function AnonymizeTable() {
+export function AnonymizeTable({
+  setS1,
+}: {
+  setS1: React.Dispatch<React.SetStateAction<number>>;
+}) {
   return (
     <>
       <h2 className="text-xl font-bold tracking-tight">Items</h2>
@@ -28,7 +32,7 @@ export function AnonymizeTable() {
           <TableRow>
             <TableHead className="w-[25px]"></TableHead>
             <TableHead>Type</TableHead>
-            <TableHead>Found</TableHead>
+            <TableHead>Original</TableHead>
             <TableHead>Replacement</TableHead>
             <TableHead className="w-[25px]"></TableHead>
           </TableRow>
@@ -63,13 +67,19 @@ export function AnonymizeTable() {
                         <Label htmlFor="width">Replacement</Label>
                         <Input
                           id="width"
-                          defaultValue="NAGAN MUNNI"
+                          defaultValue="Ramasawamy"
                           className="col-span-2 h-8"
                           autoFocus
                         />
                       </div>
                     </div>
-                    <Button>Submit</Button>
+                    <Button
+                      onClick={() => {
+                        setS1(1);
+                      }}
+                    >
+                      Submit
+                    </Button>
                   </div>
                 </PopoverContent>
               </Popover>

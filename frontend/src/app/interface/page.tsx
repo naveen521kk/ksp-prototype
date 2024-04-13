@@ -7,8 +7,11 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { AnonymizeTable } from "./anonymize-table";
+import React from "react";
 
 export default function Example() {
+  const [s1, setS1] = React.useState<number>(0);
+  const [name, setName] = React.useState<string>("Ramasawamy");
   return (
     <main>
       <ResizablePanelGroup
@@ -19,42 +22,86 @@ export default function Example() {
           <div className="flex h-full items-start justify-center p-14">
             <div className="text-2xl leading-10">
               <div className="editor" contentEditable="true" spellCheck="false">
-                <p>
-                  The text in the image is a police report from the Amengad
-                  Police Station in Bagalkot, Karnataka, India. The report is
-                  dated 10-11-2022 and is about a man named{" "}
-                  <span className="highlight">NAGAN MUNNI</span>. The report
-                  states that <span className="highlight">NAGAN MUNNI</span> is
-                  a &quot;rowdy&quot; and a &quot;habitual offender&quot; who
-                  &quot;disturbs public peace in public places.&quot; The report
-                  also states that{" "}
-                  <span className="highlight">NAGAN MUNNI</span> is &quot;under
-                  surveillance.&quot;
-                </p>
+                {s1 === 0 && (
+                  <>
+                    <p>
+                      The text in the image is a police report from the Amengad
+                      Police Station in Bagalkot, Karnataka, India. The report
+                      is dated 10-11-2022 and is about a man named{" "}
+                      <span className="highlight">{name}</span>. The report
+                      states that <span className="highlight">{name}</span> is a
+                      &quot;rowdy&quot; and a &quot;habitual offender&quot; who
+                      &quot;disturbs public peace in public places.&quot; The
+                      report also states that{" "}
+                      <span className="highlight">{name}</span> is &quot;under
+                      surveillance.&quot;
+                    </p>
 
-                <p>
-                  The report is signed by a police officer named SOMAPPA. The
-                  report is also stamped with the seal of the Amengad Police
-                  Station.
-                </p>
+                    <p>
+                      The report is signed by a police officer named SOMAPPA.
+                      The report is also stamped with the seal of the Amengad
+                      Police Station.
+                    </p>
 
-                <p>Police Report Police Station:</p>
-                <p>Amengad PS Case Number: 2022000003</p>
-                <p>Date: 10-11-2022</p>
-                <p>
-                  Subject: <span className="highlight">NAGAN MUNNI</span>{" "}
-                </p>
-                <p>
-                  Details: The accused is a rowdy and a habitual offender. He
-                  disturbs public peace in public places. He is under
-                  surveillance.{" "}
-                </p>
-                <p>
-                  Action Taken: The accused has been warned. He has been told to
-                  stop disturbing public peace.{" "}
-                </p>
-                <p>Signature: SOMAPPA Police </p>
-                <p>Officer Seal: Amengad Police Station</p>
+                    <p>Police Report Police Station:</p>
+                    <p>Amengad PS Case Number: 2022000003</p>
+                    <p>Date: 10-11-2022</p>
+                    <p>
+                      Subject: <span className="highlight">{name}</span>{" "}
+                    </p>
+                    <p>
+                      Details: The accused is a rowdy and a habitual offender.
+                      He disturbs public peace in public places. He is under
+                      surveillance.{" "}
+                    </p>
+                    <p>
+                      Action Taken: The accused has been warned. He has been
+                      told to stop disturbing public peace.{" "}
+                    </p>
+                    <p>Signature: SOMAPPA Police </p>
+                    <p>Officer Seal: Amengad Police Station</p>
+                  </>
+                )}
+                {s1 === 1 && (
+                  <>
+                    <p>
+                      The text in the image is a police report from the Amengad
+                      Police Station in Bagalkot, Karnataka, India. The report
+                      is dated 10-11-2022 and is about a man named{" "}
+                      <span className="highlight">Aadesh Muni</span>. The report
+                      states that <span className="highlight">Aadesh Muni</span>{" "}
+                      is a &quot;rowdy&quot; and a &quot;habitual offender&quot;
+                      who &quot;disturbs public peace in public places.&quot;
+                      The report also states that{" "}
+                      <span className="highlight">Aadesh Muni</span> is
+                      &quot;under surveillance.&quot;
+                    </p>
+
+                    <p>
+                      The report is signed by a police officer named SOMAPPA.
+                      The report is also stamped with the seal of the Amengad
+                      Police Station.
+                    </p>
+
+                    <p>Police Report Police Station:</p>
+                    <p>Amengad PS Case Number: 2022000003</p>
+                    <p>Date: 10-11-2022</p>
+                    <p>
+                      Subject: <span className="highlight">Aadesh Muni</span>{" "}
+                    </p>
+                    <p>
+                      Details: The accused is a rowdy and a habitual offender.
+                      He disturbs public peace in public places. He is under
+                      surveillance.{" "}
+                    </p>
+                    <p>
+                      Action Taken: The accused has been warned. He has been
+                      told to stop disturbing public peace.{" "}
+                    </p>
+                    <p>Signature: SOMAPPA Police </p>
+                    <p>Officer Seal: Amengad Police Station</p>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -75,7 +122,7 @@ export default function Example() {
                   </div>
                 </div>
                 <Separator />
-                <AnonymizeTable />
+                <AnonymizeTable setS1={setS1} />
               </div>
             </div>
           </ScrollArea>
