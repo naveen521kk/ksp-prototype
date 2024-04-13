@@ -87,7 +87,8 @@ async def identify_email_and_phone(text):
 
 @app.get("/anonymize_masked_text")
 async def anonymize_masked_text(masked_text):
-    prompt = f"The following text contains PII marked with [MASK]: \n```\n{masked_text}\n```\n Please anonymize the PII while preserving the context so that the text can be used for analysis."
+    prompt = f"The following text contains Personal Information Identifiers marked with [MASK]: \n```\n{masked_text}\n```\n Please anonymize these Personal Identity Identifiers by replacing the '[MASK]' with random placeholders while preserving the context so that the text can be used for analysis."
+    print(prompt)
     response = model.generate_content(prompt)
     return response.text
 
