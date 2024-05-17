@@ -1,0 +1,23 @@
+#downloading spacy model
+python -m spacy download en_core_web_lg
+
+sample_text = "My phone number is 212-555-5555, and my friend number is 9876543210"
+sample_text_2 = """The text in the image is a police report from the Amengad Police Station in Bagalkot, Karnataka, India. The report is dated 10-11-2022 and is about a man named Ramasawamy. The report states that Ramasawamy is a "rowdy" and a "habitual offender" who "disturbs public peace in public places." The report also states that Ramasawamy is "under surveillance."
+
+The report is signed by a police officer named SOMAPPA. The report is also stamped with the seal of the Amengad Police Station.
+
+Police Report Police Station:
+
+Amengad PS Case Number: 2022000003
+
+Date: 10-11-2022
+
+Subject: Ramasawamy 
+
+Details: The accused is a rowdy and a habitual offender. He disturbs public peace in public places. He is under surveillance. 
+
+Action Taken: The accused has been warned. He has been told to stop disturbing public peace. 
+
+Signature: SOMAPPA Police 
+
+Officer Seal: Amengad Police Station"""
