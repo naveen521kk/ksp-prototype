@@ -13,9 +13,11 @@ from presidio_analyzer.nlp_engine import (
 # import google.generativeai as genai
 from dotenv import load_dotenv
 from transformers import pipeline
+from fastapi.middleware.cors import CORSMiddleware
 from presidio_analyzer import AnalyzerEngine
 from presidio_anonymizer import AnonymizerEngine
 
+from pydantic import BaseModel
 from fastapi import FastAPI, Request, UploadFile, File
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
@@ -27,9 +29,19 @@ app = FastAPI(root_path=os.environ.get("ROOT_PATH"))
 HUGGINGFACE_KEY = os.environ.get("HUGGINGFACE_KEY")
 # pipe = pipeline("fill-mask", model="pranavraj1103/ksp-mask-model")
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+class TextItem(BaseModel):
+    text: str
 
 def create_nlp_engine_with_spacy(
-    model_path: str = "en_core_web_sm",
+    model_path: str = "en_core_web_lg",
 ):
     """
     Instantiate an NlpEngine with a spaCy model
@@ -171,7 +183,8 @@ async def parse_doc(file: UploadFile):
 
 
 @app.post("/presidio_mask")
-async def presidio_mask(text):
+async def presidio_mask(text: TextItem):
+    text = text.text
     results = analyzer.analyze(text=text, language='en')
     # for rec in results:
     #     print(rec.start)
@@ -193,3 +206,4 @@ async def presidio_mask(text):
         })
         seen_set.add((rec.start, rec.end))
     return return_list
+
