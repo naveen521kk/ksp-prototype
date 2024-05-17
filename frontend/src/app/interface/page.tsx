@@ -8,10 +8,28 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { AnonymizeTable } from "./anonymize-table";
 import React from "react";
+import { DisplayEssay } from "./display-text";
+import { PresidioOutput } from "@/lib/types";
 
-export default function Example() {
+export default function MainInterface() {
   const [s1, setS1] = React.useState<number>(0);
-  const [name, setName] = React.useState<string>("Ramasawamy");
+  const [textOps, setTextOps] = React.useState<string>("");
+  const [presidioOps, setPresidioOps] = React.useState<PresidioOutput[] | null>(
+    null,
+  );
+
+  React.useEffect(() => {
+    // get textOps from localStorage
+    const textOps = localStorage.getItem("textOps");
+    if (textOps) {
+      setTextOps(textOps);
+    }
+  }, []);
+
+  if (!textOps) {
+    return <></>;
+  }
+
   return (
     <main>
       <ResizablePanelGroup
@@ -19,9 +37,14 @@ export default function Example() {
         className="min-h-[100vh] rounded-lg border"
       >
         <ResizablePanel defaultSize={60} order={1}>
-          <div className="flex h-full items-start justify-center p-14">
+          <DisplayEssay
+            textOps={textOps}
+            presidioOps={presidioOps}
+            setPresidioOps={setPresidioOps}
+          />
+          {/* <div className="flex h-full items-start justify-center p-14">
             <div className="text-2xl leading-10">
-              <div className="editor" contentEditable="true" spellCheck="false">
+              <div className="editor" spellCheck="false">
                 {s1 === 0 && (
                   <>
                     <p>
@@ -104,7 +127,7 @@ export default function Example() {
                 )}
               </div>
             </div>
-          </div>
+          </div> */}
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={40} minSize={40} order={2}>
@@ -117,12 +140,12 @@ export default function Example() {
                       Anonymize
                     </h2>
                     <p className="text-gray-500 dark:text-gray-400">
-                      Select below the things that you want to anonymize.
+                      The things that are anonymized.
                     </p>
                   </div>
                 </div>
                 <Separator />
-                <AnonymizeTable setS1={setS1} />
+                <AnonymizeTable presidioOps={presidioOps} />
               </div>
             </div>
           </ScrollArea>
