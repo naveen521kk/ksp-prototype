@@ -71,16 +71,25 @@ export function DisplayEssay({
   setPresidioOps: React.Dispatch<React.SetStateAction<PresidioOutput[] | null>>;
   presidioOps: PresidioOutput[] | null;
 }) {
+  const [error, setError] = React.useState<string>("");
   React.useEffect(() => {
     // fetch the suggestion from the server
     const a = async () => {
       if (!textOps) return;
+      try {
+        const res = await getPresidioOutput(textOps);
 
-      const res = await getPresidioOutput(textOps);
-      // sort the suggestions based on the start index
-      res.sort((a, b) => a.start - b.start);
+        if (!res) return;
 
-      setPresidioOps(res);
+        // sort the suggestions based on the start index
+        res.sort((a, b) => a.start - b.start);
+
+        setPresidioOps(res);
+      } catch (e: any) {
+        console.error(e);
+        setError("Failed to fetch suggestions");
+        setPresidioOps([]);
+      }
     };
     a();
   }, [textOps, setPresidioOps]);
@@ -88,6 +97,7 @@ export function DisplayEssay({
   if (!textOps) return null;
   return (
     <>
+      {error && <p>{error}</p>}
       <div className="flex h-full items-start justify-center p-8">
         <div className="text-2xl leading-10">
           <div className="editor" spellCheck="false">
