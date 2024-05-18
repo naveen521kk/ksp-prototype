@@ -16,6 +16,7 @@ from transformers import pipeline
 from fastapi.middleware.cors import CORSMiddleware
 from presidio_analyzer import AnalyzerEngine
 from presidio_anonymizer import AnonymizerEngine
+from huggingface_hub import login
 
 from pydantic import BaseModel
 from fastapi import FastAPI, Request, UploadFile, File
@@ -27,7 +28,9 @@ app = FastAPI(root_path=os.environ.get("ROOT_PATH"))
 # genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
 # model = genai.GenerativeModel('gemini-pro')
 HUGGINGFACE_KEY = os.environ.get("HUGGINGFACE_KEY")
-# pipe = pipeline("fill-mask", model="pranavraj1103/ksp-mask-model")
+# login(HUGGINGFACE_KEY)
+
+pipe = pipeline("fill-mask", model="./ksp-mask-model")
 
 app.add_middleware(
     CORSMiddleware,
@@ -207,3 +210,26 @@ async def presidio_mask(text: TextItem):
         seen_set.add((rec.start, rec.end))
     return return_list
 
+
+@app.post("/anonymize_text")
+async def anonymize_text(text: TextItem):
+    off_set = 0
+    mask_list = await presidio_mask(text)
+    mask_list = sorted(mask_list, key=lambda x: x["start"])
+    new_mask_list = []
+    text = text.text
+    anonymized_text = text
+    final_text = text
+    for mask in mask_list:
+        mask_text = anonymized_text[:mask["start"]] + "<mask>" + anonymized_text[mask["end"]:]
+        options = pipe(mask_text)
+        final_text = final_text[:mask["start"] + off_set] + options[0]["token_str"] + final_text[mask["end"] + off_set:]
+        new_mask_list.append({
+            "start": mask["start"] + off_set,
+            "end": mask["start"] + off_set + len(options[0]["token_str"]),
+            "entity_type": mask["entity_type"],
+            "options": options,
+            "original_text": mask["text"],
+        })
+        off_set += len(options[0]["token_str"]) - len(mask["text"])
+    return {"anonymized_text": final_text, "mask_list": new_mask_list}

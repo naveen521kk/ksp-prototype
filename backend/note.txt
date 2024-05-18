@@ -21,3 +21,5 @@ Action Taken: The accused has been warned. He has been told to stop disturbing p
 Signature: SOMAPPA Police 
 
 Officer Seal: Amengad Police Station"""
+
+sample_text_20 = 'The text in the image is a police report from the Amengad Police Station in Bagalkot, Karnataka, India. The report is dated 10-11-2022 and is about a man named Ramasawamy. The report states that Ramasawamy is a rowdy and a habitual offender who disturbs public peace in public places. The report also states that Ramasawamy is under surveillance.\n\nThe report is signed by a police officer named SOMAPPA. The report is also stamped with the seal of the Amengad Police Station.\n\nPolice Report Police Station:\n\nAmengad PS Case Number: 2022000003\n\nDate: 10-11-2022\n\nSubject: Ramasawamy \n\nDetails: The accused is a rowdy and a habitual offender. He disturbs public peace in public places. He is under surveillance. \n\nAction Taken: The accused has been warned. He has been told to stop disturbing public peace. \n\nSignature: SOMAPPA Police \n\nOfficer Seal: Amengad Police Station'
