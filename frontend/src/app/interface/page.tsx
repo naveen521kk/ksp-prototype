@@ -9,14 +9,39 @@ import { Separator } from "@/components/ui/separator";
 import { AnonymizeTable } from "./anonymize-table";
 import React from "react";
 import { DisplayEssay } from "./display-text";
-import { PresidioOutput } from "@/lib/types";
+import { ModelOutput, PresidioOutput } from "@/lib/types";
+import { anonymizeText } from "@/lib/api";
+import { useAtom } from "jotai";
+import { presidioOpsAtom } from "@/lib/atoms";
 
 export default function MainInterface() {
-  const [s1, setS1] = React.useState<number>(0);
   const [textOps, setTextOps] = React.useState<string>("");
-  const [presidioOps, setPresidioOps] = React.useState<PresidioOutput[] | null>(
+  const [modelOutput, setModelOutput] = React.useState<ModelOutput | null>(
     null,
   );
+  const [error, setError] = React.useState<string>("");
+  const requestCount = React.useRef(0);
+
+  React.useEffect(() => {
+    // fetch the suggestion from the server
+    const a = async () => {
+      if (!textOps) return;
+      if (requestCount.current > 0) return;
+      try {
+        const res = await anonymizeText(textOps);
+
+        if (!res) return;
+
+        setModelOutput(res);
+        requestCount.current += 1;
+      } catch (e: any) {
+        console.error(e);
+        setError("Failed to fetch suggestions");
+        setModelOutput(null);
+      }
+    };
+    a();
+  }, [textOps]);
 
   React.useEffect(() => {
     // get textOps from localStorage
@@ -37,11 +62,10 @@ export default function MainInterface() {
         className="min-h-[100vh] rounded-lg border"
       >
         <ResizablePanel defaultSize={60} order={1}>
-          <DisplayEssay
-            textOps={textOps}
-            presidioOps={presidioOps}
-            setPresidioOps={setPresidioOps}
-          />
+          <ScrollArea className="h-[100vh] w-full">
+            {error && <p>{error}</p>}
+            <DisplayEssay textOps={textOps} modelOutput={modelOutput} />
+          </ScrollArea>
           {/* <div className="flex h-full items-start justify-center p-14">
             <div className="text-2xl leading-10">
               <div className="editor" spellCheck="false">
@@ -145,7 +169,10 @@ export default function MainInterface() {
                   </div>
                 </div>
                 <Separator />
-                <AnonymizeTable presidioOps={presidioOps} />
+                <AnonymizeTable
+                  modelOutput={modelOutput}
+                  setTextOps={setTextOps}
+                />
               </div>
             </div>
           </ScrollArea>
